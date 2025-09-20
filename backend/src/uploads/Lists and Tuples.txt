@@ -1,0 +1,79 @@
+                           Lists
+Built-in data types. It can store elements of different types(integer, float, string, etc).
+
+program:
+marks = [1,2,3,4]
+print(type(marks)) 
+
+o/p: <class 'list'>
+We can apply indexing, and len() with lists.
+We can store data of different types.
+Lists are mutable in Python. Even though we kow that strings are immutable the following is absolutely possible in Python - 
+
+programs:
+
+marks = [1,2,3,"Priyanka"]
+print(marks)
+marks[3] = 'Sahoo'
+print(marks)
+
+o/p:
+
+[1, 2, 3, 'Priyanka']
+[1, 2, 3, 'Sahoo']
+
+indexing and slicing are also applicable in lists. List1[0,2] means that elements having index 0,1 will be included. Negative indexing also applicable.
+
+Lists specific methods:
+
+list.append(element)  #appends an element at the end
+list.sort()  #sorts in ascending order. It is possible to sort characters and strings
+list.sort(reverse = True)   #orders in descending order
+list.insert(index, element)  #inserts element at the given index
+lit.remove(element)  #removes the irst occurence of an element
+list.pop(index)  #removes element at index.
+list1.copy()  #creates another list and copies the content of list1 to that independent list i.e list1
+list1.reverse()  #reverses the list
+
+                            Tuples
+A built-in data type. The difference between lists and tuple is that lists are mutable whereas tuple are not. Lists are written within square brackets whereas tuple are written within parenthesis.
+
+programs:
+marks = (1,2,3)
+print(type(marks))
+
+o/p: 
+<class, 'Tuple'>
+
+program:
+marks = (1,2,3)
+marks[0] = 6
+
+o/p: This will give an error. As tuples are not mutable. It is not possible to assign a different value to an element.
+
+If we write a single element in a tuple, like this marks = (1), the python interpreter will perceive it as a single element and will print it like this - o/p: 1. But if we write it like this - marks = (1,), the single element will be perceived as a tuple with single element. But the same is not true for Lists. we don't have to write it with commas if there is a single element. 
+
+Tuple built-in methods:
+
+tup.index(element)    #returns index of first occurence
+tup.count(element)  #counts the total number of occurences of the element.
+
+question: Write a program to check whether a list is palindrome or not.
+
+program:
+list1 = [1,2,3,2,1]
+list2 = list1.copy() 
+
+#Here copy() ensure that another independent list list1 is created and the contents of list1 are being copied to the new list list2. if we had written list1 = list2 then we wold have added another reference ie list 2 to the same list i.e list1
+
+list2.reverse()
+if(list1 == list2):
+    print("They are palindromes")
+else:
+    print("They are not palindromes")
+
+o/p:They are palindromes
+
+how to transfer data from a list to a tuple and vice versa?
+
+

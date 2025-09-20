@@ -6,7 +6,7 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 
-DATABASE_URL = "postgresql://postgres:argusadmin@localhost:5432/elp"
+DATABASE_URL = "postgresql://postgres:argusadmin@localhost:5432/E-learning"
 
 engine = create_engine(DATABASE_URL)
 

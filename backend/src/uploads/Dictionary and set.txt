@@ -1,0 +1,54 @@
+                                Dictionary
+
+They store values in Key-value pairs. 
+They are unordered.
+They are mutable.
+They don't allow duplicate keys.
+
+Example: info = {
+    "name": "Priyanka Sahoo",
+    "topics": ["SQL", "POSTRESQL", "MongoDB"],
+    "isAnAdult": "yes",
+    "age": 22
+    
+}
+print(info)
+
+o/p:
+{'name': 'Priyanka Sahoo', 'topics': ['SQL', 'POSTRESQL', 'MongoDB'], 'isAnAdult': 'yes', 'age': 22}
+
+nested dictionaries:
+student = {
+    "name": "A",
+    "age": 22,
+    "subjects": {
+        "COA": 77,
+        "CN": 68,
+        "ICP": 70
+    }
+    }
+print(student["name"])
+print(student["subjects"])
+print(student["subjects"]["COA"])
+
+Output: A
+{'COA': 77, 'CN': 68, 'ICP': 70}
+77
+
+to access the marks obtained in coa we can write student[subjects][COA]
+
+to access all the keys in a dictionary: print(student.keys())
+
+to get the number of keys in a dictionary - print(len(list(student.keys())))/ print(len(student))
+
+to get all the values in the dictionary - students.values()
+
+returns key and value pairs as tuples - students.items()
+
+returns the value associated with the key - students.get("key")
+
+inserts specified key-value pairs - dict.update(new_dict)
+
+
+                           Sets
+

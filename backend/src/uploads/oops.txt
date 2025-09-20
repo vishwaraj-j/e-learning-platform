@@ -1,0 +1,103 @@
+Class: Blueprint
+Object: Instance
+
+Class Student:
+name: "Priyanka"            #This will set the value of name as Priyanka for all students.
+
+s1 = Student()
+print(s1.name)    #This will print Karan
+
+s2 = Student()
+print(s2.name)    #This will print Karan as well.
+
+__init__() Function:
+It acts like a constructor. It gets called every time an object is created. the use of self in it's parameter basically refers to the object.
+
+self is basically a reference to the current instance. it is used to access the reference variable.
+class Student:
+  def __init__(self, fullname):
+    self.name = fullname
+    print("adding new Student in Database")
+s1 = Student("Karan")
+print(s1.name)   #Karan
+
+Constructors are basically of two types - default and parameterized
+Class attributes: Variables which have common values for all instances. it is accessed like - class.atr. It is stored only once in the memory.
+for eg: Value of college name for all instances will be same.
+
+Instance attributes: Variables which have different values for different instances. Sytax: obj.attr
+eg: The value of student name for all instances.
+
+If we have class and object attributes with the same name then the object attributes take precedence over class precedence.
+For eg: class Student:
+    college_name="ABC COLLEGE"
+    name = "Priyanka"
+    def __init__(self, name):
+        self.name = name
+        print("adding new student in database")
+
+s1 = Student("Karan")
+print(s1.name)
+
+
+class Student:
+    def __init__(self, fullname, marks):
+        self.name = fullname
+        self.marks = marks
+    def get_avg(self):
+        sum=0
+        for m in self.marks:
+            sum+=m
+        print("The avg of ", s1.name, "is",  sum/len(self.marks))
+s1 = Student("Priyanka", [111,120,34])
+s1.get_avg()
+            
+                                Static methods
+They work at class level. They don't need self as parameter. To declare a method static, we use the decorator ie @static method.                                
+
+4 pillars of OOPS:
+	Absraction,
+	Encapsulation,
+	Inheritance,
+	Polymorphism
+
+class Account:
+    def __init__(self, acc_no, balance):
+        self.acc_no = acc_no
+        self.balance = balance
+    def debit(self, amount):
+        self.balance+=amount
+    def credit(self, amount):
+        self.balance-=amount
+    def get_balance(self):
+        return self.balance
+acc1 = Account(1000, 2000)
+print(acc1.balance)
+print(acc1.acc_no)
+
+To delete an object or an attribute:
+ del.obj.attr or del.obj
+ 
+                     Private attributes & methods
+These attributes are meant to be used only within the class and are not accesssible from outside the scope of the class. An attribute can be made private by simply adding two underscore before it, same goes for function as well. We may ask ourselves that why should we make our functions private hence making it impossible to be used by other objects, but making it private means those functions are generally used by other functions in the code.
+
+class account:
+    def __init__(self, acc_no, password):
+        self.acc_no = acc_no
+        self.password = password
+a1 = account(1000, 'abc')
+print(a1.acc_no)
+print(a1.password)
+
+o/p:1000
+abc
+
+The problem is that we are able access sensitive information like account password outside the class, this may lead to someone modifying it.
+
+Previously I had a doubt regarding the passing of self in the argument of constructors and instance methods. The constructor part is still a mystery but i think i have a grasp of why we use self parameter in instance methods. because in java we write obj_name.method(), which makes it clear for the method to know which instance they are working on, the same happens in Python, only the syntax differs. 
+
+
+
+                                Inheritence
+                                
+

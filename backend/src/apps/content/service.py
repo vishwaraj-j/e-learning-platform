@@ -1,85 +1,65 @@
-from fastapi import Depends, FastAPI, Form, HTTPException, Query, APIRouter, UploadFile
-from fastapi.params import File
-from sqlmodel import Field, Session, SQLModel, create_engine, select
-from src.apps.course.model import Course, Module
-from src.database import create_db_and_tables, engine, SessionLocal, get_db
-from pydantic import BaseModel
-# from src.models import Student, Instructor, Course, StudentCourseLink, Module, ContentType, Content, Quiz, StudentQuizLink, Question, Result, ResultCreate, Password
-from src.validation import check_question, check_answer, check_answer_set
-import json
-from typing import Annotated
-import requests
-
-from datetime import datetime, timedelta, timezone
-import jwt
-from fastapi import Depends, FastAPI, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jwt.exceptions import InvalidTokenError
-from passlib.context import CryptContext
-from pydantic import BaseModel
-from src.schemas import Token, StudentSignup, InstructorSignup
-from src.auth import verify_password, create_access_token, decode_access_token, hash_password, get_current_user
-from typing import Optional, List
+import os
+import shutil
+from datetime import datetime
+from sqlmodel import Session
+from fastapi import UploadFile
 from . import schemas, model
-
-
+from fastapi import HTTPException, status  
 from src.apps.user.model import Password
+UPLOAD_DIR = "uploads"
+ALLOWED_EXTENSIONS = {"ppt", "pptx", "txt", "docx", "jpg", "jpeg", "png", "mp4"}
+ALLOWED_MIME_TYPES = {
+    "application/vnd.ms-powerpoint",   
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",  
+    "text/plain",  
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",  
+    "image/jpeg",  
+    "image/png",   
+    "video/mp4"    
+}
 
 
-# @router.post("/create/")
-async def create_content(current_user: Password, db: Session, module_id: int = Form(...), file: UploadFile = File(...)):
-    module = db.get(Module, module_id)
-    course = db.get(Course, module.course_id)
 
-    if not module:
-        raise HTTPException(status_code=404, detail="Module not found")
-
-    if not course:
-        raise HTTPException(status_code=404, detail="Course not found")
+async def create_content(content_data: schemas.ContentCreate, file: UploadFile, db: Session, current_user:Password):
     
-    if course.instructor_id != current_user.instructor_id:
-        raise HTTPException(status_code=403, detail="Not your course")
+    ext = file.filename.split(".")[-1].lower()
+    if ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"File type '.{ext}' not allowed. Allowed: {', '.join(ALLOWED_EXTENSIONS)}"
+        )
+    
+    if file.content_type not in ALLOWED_MIME_TYPES:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"MIME type '{file.content_type}' not allowed."
+        )
 
-    binary_data_uploaded = await file.read()
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    file_path = os.path.join(UPLOAD_DIR, file.filename)
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-    db_content = model.Content(
-        module_id=module_id,
-        binary_data=binary_data_uploaded
+    new_content = model.Content(
+        title=content_data.title,
+        description=content_data.description,
+        file_url=file_path,
+        file_type=file.content_type,
+        uploaded_at=datetime.utcnow(),
+        
+        
     )
-
-    db.add(db_content)
+    
+    new_content.created_by = current_user.id
+    new_content.updated_by = current_user.id    
+    db.add(new_content)
     db.commit()
-    db.refresh(db_content)
-    # return db_content
-    return "hello"
+    db.refresh(new_content)
+    return new_content
 
-# @router.put("/{content_id}")
-async def update_content(
-    content_id: int,
-    session: Session,
-    module_id: Optional[int] = None,
-    file: Optional[UploadFile] = File(None)
-):
-    content = session.get(model.Content, content_id)
+async def get_content(content_id: int, db: Session):
+    content = db.get(model.Content, content_id)
     if not content:
-        raise HTTPException(status_code=404, detail="Content not found")
+        raise ValueError(f"Content with id={content_id} not found")
+    return content
 
-    if module_id is not None:
-        content.module_id = module_id
-    if file is not None:
-        content.binary_data = await file.read()
-
-    session.add(content)
-    session.commit()
-    session.refresh(content)
-    return {"message": "Content updated successfully", "id": content.id}
-
-# @router.delete("/{content_id}")
-def delete_content(content_id: int, session: Session):
-    content = session.get(model.Content, content_id)
-    if not content:
-        raise HTTPException(status_code=404, detail="Content not found")
-
-    session.delete(content)
-    session.commit()
-    return {"message": f"Content {content_id} deleted successfully"}
