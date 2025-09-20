@@ -116,6 +116,8 @@ def create_result(result: ResultCreate, quiz_id: int, db: Session, current_user:
 
 
     attempt = StudentQuizLink(student_id=current_user.student_id, quiz_id=quiz_id)
+    attempt.created_by = current_user.id
+    attempt.updated_by = current_user.id
     db.add(attempt)
     db.commit()
     db.refresh(attempt)

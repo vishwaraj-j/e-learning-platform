@@ -47,6 +47,9 @@ async def create_content(current_user: Password, db: Session, module_id: int = F
         binary_data=binary_data_uploaded
     )
 
+    db_content.created_by = current_user.id
+    db_content.updated_by = current_user.id
+
     db.add(db_content)
     db.commit()
     db.refresh(db_content)
@@ -55,6 +58,7 @@ async def create_content(current_user: Password, db: Session, module_id: int = F
 
 # @router.put("/{content_id}")
 async def update_content(
+    current_user: Password,
     content_id: int,
     session: Session,
     module_id: Optional[int] = None,
@@ -68,6 +72,9 @@ async def update_content(
         content.module_id = module_id
     if file is not None:
         content.binary_data = await file.read()
+
+    content.created_by = current_user.id
+    content.updated_by = current_user.id
 
     session.add(content)
     session.commit()

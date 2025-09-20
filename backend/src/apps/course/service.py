@@ -4,9 +4,13 @@ from src.database import create_db_and_tables, engine, SessionLocal, get_db
 from fastapi import Depends, FastAPI, HTTPException, Query, APIRouter, File, UploadFile, Form 
 from src.apps.user.model import Password
 
-def create_course(db: Session, course: schemas.CourseCreate):
+def create_course(db: Session, course: schemas.CourseCreate,current_user: Password):
     course_obj = model.Course(**course.dict())
     with Session(engine) as session:
+
+        course_obj.created_by = current_user.id
+        course_obj.updated_by = current_user.id
+
         session.add(course_obj)
         session.commit()
         session.refresh(course_obj)
@@ -18,7 +22,7 @@ def read_courses(db: Session):
 
     return courses
     
-def update_course(course_id: int, new_data: schemas.CourseUpdate, db: Session):
+def update_course(current_user:Password ,course_id: int, new_data: schemas.CourseUpdate, db: Session):
     # if current_user.instructor == None:
     #     raise HTTPException(status_code=403, detail="only instructor allowed")
     
@@ -27,6 +31,9 @@ def update_course(course_id: int, new_data: schemas.CourseUpdate, db: Session):
         raise HTTPException(status_code=404, detail="Course not found")
 
     db_course.name = new_data.name
+
+    db_course.created_by = current_user.id
+    db_course.updated_by = current_user.id
 
     db.add(db_course)
     db.commit()
@@ -57,6 +64,8 @@ def create_module(module: schemas.ModuleCreate, current_user: Password, db: Sess
         raise HTTPException(status_code=403, detail="Not your course")
         
     with Session(engine) as session:
+        module.created_by = current_user.id
+        module.updated_by = current_user.id
         session.add(module)
         session.commit()
         session.refresh(module)
@@ -79,7 +88,8 @@ def update_module(
 
     for key, value in updated_data.items():
         setattr(module, key, value)
-
+    module.created_by = current_user.id
+    module.updated_by = current_user.id
     db.commit()
     db.refresh(module)
     return module
