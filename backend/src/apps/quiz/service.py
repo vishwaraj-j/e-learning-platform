@@ -22,6 +22,10 @@ from src.apps.user.model import Password
 
 def create_quiz(quiz: schemas.QuizCreate, current_user: Password, db: Session):
     quiz_obj = model.Quiz(**quiz.dict())
+    
+    quiz_obj.created_by = current_user.id
+    quiz_obj.updated_by = current_user.id
+    
     db.add(quiz_obj)
     db.commit()
     db.refresh(quiz_obj)
@@ -35,6 +39,9 @@ def add_question(quiz_id: int, question: schemas.QuestionCreate,current_user:Pas
     check_answer(question.question_answers,question.question_content)
     question_obj = model.Question(**question.dict())
     question_obj.quiz_id = quiz_id
+
+    question_obj.created_by = current_user.id
+    question_obj.updated_by = current_user.id
 
     db.add(question_obj)
     db.commit()

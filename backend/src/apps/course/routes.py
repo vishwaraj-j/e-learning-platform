@@ -26,8 +26,9 @@ from src.core.dependencies import require_instructor
 router = APIRouter(prefix="/courses", tags=["Courses"], dependencies=[Depends(require_instructor)])
 
 @router.post("/create", response_model=schemas.CourseRead)
-def create_course(course: schemas.CourseCreate, db: Session = Depends(get_db)):
-    return service.create_course(db, course)
+def create_course(course: schemas.CourseCreate, db: Session = Depends(get_db),current_user: Password = Depends(get_current_user)):
+    print("COURSE: ",course)
+    return service.create_course(db, course, current_user)
 
 @router.put("/{course_id}", response_model=schemas.CourseRead)
 def update_course(course_id: int, new_data: schemas.CourseUpdate, db: Session = Depends(get_db)):
