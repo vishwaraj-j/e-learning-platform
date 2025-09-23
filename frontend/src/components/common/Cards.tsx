@@ -13,22 +13,22 @@ const Cards: React.FC<CardProps>= ({
   description="Short description of the course Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
   progress=50,
   imgSrc="/public/course.jpg",
-  isEnrolled= true
+  isEnrolled= false
 },
 ) => {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg  hover:bg-gray-100 hover:scale-105 hover:shadow-lg transform transition-all duration-500 ease-in-out">
   <img className="w-full" src={imgSrc} alt="Course background image"/>
   <div className="px-6 py-4">
     <div className="font-bold text-xl mb-2">{title}</div>
-    <div className="text-m mb-2"> {instructorName}</div>
+    <div className="text-m mb-2"> By - {instructorName}</div>
     <p className="text-gray-700 text-base">
       {description}
     </p>
   </div>
 {
 isEnrolled?
-  <div className="px-6 pt-4 pb-2">
+  <div className="px-6 pt-4 pb-10">
   <div className="w-full bg-gray-200 rounded-full ">
     <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{width: `${progress}%` }}> {progress} %</div>
   </div>
