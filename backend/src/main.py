@@ -10,8 +10,20 @@ from src.apps.student.routes import router as student_router
 from src.apps.quiz.routes import router as quiz_router
 from src.apps.Result.routes import router as result_router
 from src.apps.content.routes import router as content_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["http://localhost:5173",
+           ]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"]
+)
 
 @app.on_event("startup")
 def on_startup():

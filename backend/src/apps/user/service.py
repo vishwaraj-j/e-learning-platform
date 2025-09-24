@@ -23,16 +23,42 @@ from src.apps.instructor.model import Instructor
 
 # @router.post("/token", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    
     statement = select(model.Password).where(model.Password.username == form_data.username)
     creds = db.scalars(statement).first()
-    # print("creds: ", type(creds))
-    # print("creds: ", creds.id)
     if not creds or not verify_password(form_data.password, creds.hashed_password):
         raise HTTPException(status_code=400, detail="Invalid credentials")
-
-    role = "student" if creds.student_id else "instructor"
+    
+    if creds.student_id:
+        role = "student"
+        user_obj = db.get(Student, creds.student_id)
+    elif creds.instructor_id:
+        role = "instructor"
+        user_obj = db.get(Instructor, creds.instructor_id)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid user role")
+    if not user_obj:
+        raise HTTPException(status_code=400, detail="User not found")
+   
+    user_data = {
+        "username": creds.username,
+        "name": user_obj.name, 
+        "role": role
+    }
+   
     token = create_access_token({"sub": creds.username, "role": role})
-    return {"access_token": token, "token_type": "bearer"}
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "user": user_data
+    }
+
+
+
+
+
+
+
 
 # @router.post("/signup/student")
 def signup_student( db: Session, data: schemas.StudentSignup):

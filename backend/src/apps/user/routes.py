@@ -15,14 +15,14 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 from pydantic import BaseModel
-from src.schemas import Token, StudentSignup, InstructorSignup
+from src.apps.user.schemas import Token, StudentSignup, InstructorSignup, TokenwithUser
 # from src.auth import verify_password, create_access_token, decode_access_token, hash_password, get_current_user
 from typing import Optional
 from . import schemas, service
 
 router = APIRouter(prefix="/user", tags=["user"])
 
-@router.post("/login", response_model=Token)
+@router.post("/token", response_model=TokenwithUser)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     return service.login(form_data, db)
 

@@ -5,6 +5,18 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
+class UserOut(BaseModel):
+    username:str
+    name:str
+    role:str
+class TokenwithUser(BaseModel):
+    access_token:str
+    token_type:str
+    user:UserOut
+    
+    class Config:
+        orm_mode = True
+
 
 class TokenData(BaseModel):
     username: Optional[str] = None
