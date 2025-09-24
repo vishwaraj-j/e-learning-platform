@@ -1,16 +1,23 @@
+import {createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { CourseCatalog } from './pages/CourseCatalog'
 import Error from './components/common/Error'
-import { ModuleCard } from "./components/common/ModuleCard"
 import CourseDetails from "./pages/CourseDetails"
 import ModuleDetails from "./pages/ModuleDetails"
 function App() {
+  const router = createBrowserRouter([
+    {path:"/course-catalog", element:<CourseCatalog/>},
+    {path:"/course-details", element:<CourseDetails/>},
+    {path:"/module-details", element:<ModuleDetails/>},
+    {path:"*", element:<Error/>}
+
+  ])
 
   return (<>
-  <CourseCatalog/>
+  {/* <CourseCatalog/>
   <Error/>
-  <ModuleCard/>
   <CourseDetails/>
-  <ModuleDetails/>
+  <ModuleDetails/> */}
+  <RouterProvider router={router}/>
 
   </>
   )

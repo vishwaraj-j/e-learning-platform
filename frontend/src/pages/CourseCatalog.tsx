@@ -1,6 +1,7 @@
 import Cards from '../components/common/Cards'
 import Navbar from '../components/common/Navbar'
 import Sidebar from '../components/common/Sidebar'
+import { Link } from 'react-router-dom'
 export const CourseCatalog = () => {
     const courses = [
       { id: 1, name: 'Course A', instructorName:'Sunakshi Singh' },
