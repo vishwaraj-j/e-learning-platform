@@ -9,7 +9,7 @@ export default function Sidebar() {
     <div>
       <button
         onClick={() => setOpen(true)}
-        className="rounded-md bg-gray-950/5 px-2.5 py-1.5 text-sm font-semibold text-gray-900 hover:bg-gray-950/10 absolute left-0 top-1/2 -translate-y-1/2 h-48"
+        className="absolute left-0 top-1/2 -translate-y-1/2 bg-blue-500 p-4 rounded-md bg-gray-950/5 px-2.5 py-1.5 text-sm font-semibold text-gray-900 hover:bg-gray-950/10  h-48"
       >
         &gt;
       </button>
