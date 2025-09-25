@@ -63,7 +63,8 @@ export default function ModuleDetails() {
             <NavLink to="/module-details" className="flex justify-between p-1 text-gray-900 bg-gray-50 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 ">
                 <span className="ms-3">{quiz.title}</span>
                 {quiz.isComplete?
-                  <button type="button" className="text-green-600 hover:text-white border border-blue6700 hover:bg-green-600 font-medium rounded-lg text-sm px-5 py-1.5 text-center me-2 mb-1">View Results</button>
+                  <NavLink to="/quiz-results" type="button" className="text-green-600 hover:text-white border border-blue6700 hover:bg-green-600 font-medium rounded-lg text-sm px-5 py-1.5 text-center me-2 mb-1">View Results
+                  </NavLink>
                   :
                   <button type="button" className="text-blue-600 hover:text-white border border-blue6700 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-1.5 text-center me-2 mb-1">Attempt Quiz</button>
                 }
