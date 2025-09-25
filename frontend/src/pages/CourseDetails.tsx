@@ -53,7 +53,7 @@ export default function CourseDetails() {
     <section className="flex flex-col bg-white rounded-lg p-6 shadow-md  w-full">
 		<h3 className='text-xl font-semibold tracking-tight text-gray-900 mb-3'>Modules</h3>
     {modules.map((module)=>(
-      <ModuleCard title={module.title} isComplete={module.isComplete}/>
+      <ModuleCard key={module.id} title={module.title} isComplete={module.isComplete}/>
     ))}
     </section>
 	</div>

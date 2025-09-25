@@ -1,21 +1,20 @@
 import Cards from '../components/common/Cards'
 import Navbar from '../components/common/Navbar'
 import Sidebar from '../components/common/Sidebar'
-import { Link } from 'react-router-dom'
 export const CourseCatalog = () => {
     const courses = [
       { id: 1, name: 'Course A', instructorName:'Sunakshi Singh' },
       { id: 2, name: 'Course B', instructorName:'Sarvagya Agrawal' },
       { id: 3, name: 'Course C', instructorName:'Priyanka Sahoo', isEnrolled:true},
-      { id: 1, name: 'Course D', instructorName:'Anushka Tyagi', isEnrolled:true },
-      { id: 2, name: 'Course E', instructorName:'Shruti Singh', isEnrolled:true},
-      { id: 3, name: 'Course F', instructorName:'Samridhi Narayan' },
-      { id: 1, name: 'Course G', instructorName:'Utkarsh Shukla' },
-      { id: 2, name: 'Course H', instructorName:'Sarvagya Agrawal' },
-      { id: 3, name: 'Course I', instructorName:'Shreyansh Mittal' },
-      { id: 1, name: 'Course J', instructorName:'Sunakshi Singh' },
-      { id: 2, name: 'Course K', instructorName:'Vishwaraj Jadega' },
-      { id: 3, name: 'Course L', instructorName:'Anushka Tyagi' },
+      { id: 4, name: 'Course D', instructorName:'Anushka Tyagi', isEnrolled:true },
+      { id: 5, name: 'Course E', instructorName:'Shruti Singh', isEnrolled:true},
+      { id: 6, name: 'Course F', instructorName:'Samridhi Narayan' },
+      { id: 7, name: 'Course G', instructorName:'Utkarsh Shukla' },
+      { id: 8, name: 'Course H', instructorName:'Sarvagya Agrawal' },
+      { id: 9, name: 'Course I', instructorName:'Shreyansh Mittal' },
+      { id: 10, name: 'Course J', instructorName:'Sunakshi Singh' },
+      { id: 11, name: 'Course K', instructorName:'Vishwaraj Jadega' },
+      { id: 12, name: 'Course L', instructorName:'Anushka Tyagi' },
       
 
     ];
@@ -31,9 +30,9 @@ export const CourseCatalog = () => {
     
           {courses.map((course) => (
 
-            <div className="">
-                <Cards title={course.name} instructorName={course.instructorName} isEnrolled={course.isEnrolled}/>
-            </div>
+            
+                <Cards key={course.id} title={course.name} instructorName={course.instructorName} isEnrolled={course.isEnrolled}/>
+           
           ))}
         
 

@@ -13,10 +13,7 @@ function App() {
   ])
 
   return (<>
-  {/* <CourseCatalog/>
-  <Error/>
-  <CourseDetails/>
-  <ModuleDetails/> */}
+
   <RouterProvider router={router}/>
 
   </>

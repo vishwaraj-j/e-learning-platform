@@ -1,6 +1,7 @@
 import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
+import { NavLink } from 'react-router-dom'
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false)
@@ -64,14 +65,14 @@ export default function Sidebar() {
 
       <ul className="space-y-2 font-medium">
          <li>
-            <a href="#" className="flex items-center p-2 text-gray-900 bg-gray-100 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+            <NavLink to="#" className="flex items-center p-2 text-gray-900 bg-gray-100 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
                <span className="ms-3">Courses</span>
-            </a>
+            </NavLink>
          </li>
           <li>
-            <a href="#" className="flex items-center p-2 text-gray-900 bg-gray-100 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+            <NavLink to="#" className="flex items-center p-2 text-gray-900 bg-gray-100 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
                <span className="ms-3">Quizes</span>
-            </a>
+            </NavLink>
          </li>
 
          
